@@ -1,0 +1,78 @@
+{% extends "dashboard/base_template.html" %}
+{% block title %}{{request.config.site_name}}{% endblock %}
+{% load static %}
+{% block static_css %}
+<!-- Plugins css -->
+<link href="{% static 'backendassets/libs/flatpickr/flatpickr.min.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'backendassets/libs/selectize/css/selectize.bootstrap3.css' %}" rel="stylesheet"
+    type="text/css" />
+
+<!-- App css -->
+<link href="{% static 'backendassets/css/bootstrap-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-default-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-default-stylesheet" />
+
+<link href="{% static 'backendassets/css/bootstrap-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-dark-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="{% static 'backendassets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+
+{% endblock  %}
+
+{% block content %}
+<!-- Start Content-->
+<div class="container-fluid">
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-xl-4 mb-4">
+            <div class="error-text-box">
+                <svg viewBox="0 0 600 200">
+                    <!-- Symbol-->
+                    <symbol id="s-text">
+                        <text text-anchor="middle" x="50%" y="50%" dy=".35em">404!</text>
+                    </symbol>
+                    <!-- Duplicate symbols-->
+                    <use class="text" xlink:href="#s-text"></use>
+                    <use class="text" xlink:href="#s-text"></use>
+                    <use class="text" xlink:href="#s-text"></use>
+                    <use class="text" xlink:href="#s-text"></use>
+                    <use class="text" xlink:href="#s-text"></use>
+                </svg>
+            </div>
+            <div class="text-center">
+                <h3 class="mt-0 mb-2">Whoops! Page not found </h3>
+                <p class="text-muted mb-3">It's looking like you may have taken a wrong turn. Don't worry...
+                    it happens to the best of us. You might want to check your internet connection.
+                    Here's a little tip that might help you get back on track.</p>
+
+                <a href="{% url 'dashboard:index' %}" class="btn btn-success waves-effect waves-light">Back to
+                    Dashboard</a>
+            </div>
+            <!-- end row -->
+
+        </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+
+    {% endblock %}
+
+    {% block static_js %}
+    <!-- Vendor js -->
+    <script src="{% static 'backendassets/js/vendor.min.js' %}"></script>
+
+    <!-- Plugins js-->
+    <script src="{% static 'backendassets/libs/flatpickr/flatpickr.min.js' %}"></script>
+    <script src="{% static 'backendassets/libs/apexcharts/apexcharts.min.js' %}"></script>
+
+    <script src="{% static 'backendassets/libs/selectize/js/standalone/selectize.min.js' %}"></script>
+
+    <!-- Dashboar 1 init js-->
+    <script src="{% static 'backendassets/js/pages/dashboard-1.init.js' %}"></script>
+
+    <!-- App js-->
+    <script src="{% static 'backendassets/js/app.min.js' %}"></script>
+    {% endblock %}

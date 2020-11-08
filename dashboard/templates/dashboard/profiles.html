@@ -1,0 +1,128 @@
+{% extends "dashboard/base_template.html" %}
+{% block title %}Profiles{% endblock %}
+
+{% load static %}
+{% block static_css %}
+<!-- App css -->
+<link href="{% static 'backendassets/css/bootstrap-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-default-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-default-stylesheet" />
+
+<link href="{% static 'backendassets/css/bootstrap-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-dark-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="{% static 'backendassets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Profiles</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Profiles</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-lg-8">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="inputPassword2" class="sr-only">Search</label>
+                            <input type="search" class="form-control" id="inputPassword2" placeholder="Search...">
+                        </div>
+                        <div class="form-group mx-sm-3">
+                            <label for="status-select" class="mr-2">Sort By</label>
+                            <select class="custom-select" id="status-select">
+                                <option selected="">All</option>
+                                <option value="1">Name</option>
+                                <option value="2">Post</option>
+                                <option value="3">Followers</option>
+                                <option value="4">Followings</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <div class="text-lg-right mt-3 mt-lg-0">
+                        <button type="button" class="btn btn-success waves-effect waves-light mr-1"><i
+                                class="mdi mdi-cog"></i></button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal"
+                            data-target="#custom-modal"><i class="mdi mdi-plus-circle mr-1"></i> Add New</button>
+                    </div>
+                </div><!-- end col-->
+            </div> <!-- end row -->
+        </div> <!-- end card-box -->
+    </div><!-- end col-->
+</div>
+<!-- end row -->
+
+<div class="row">
+    {% for item in profiles %}
+    <div class="col-lg-4">
+        <div class="text-center card-box">
+            <div class="pt-2 pb-2">
+                <img src="{{item.image.url}}" class="rounded-circle img-thumbnail avatar-xl" alt="profile-image">
+
+                <h4 class="mt-3 font-16"><a href="extras-profile.html" class="text-dark">{{item.full_name}}</a></h4>
+                <p class="text-muted">{{item.date}} <span> | </span> <span> <a href="#"
+                            class="text-pink">{{item.location}}</a>
+                    </span></p>
+
+                <button type="button" class="btn btn-primary btn-sm waves-effect waves-light">Message</button>
+                <button type="button" class="btn btn-light btn-sm waves-effect">Follow</button>
+            </div> <!-- end .padding -->
+        </div> <!-- end card-box-->
+    </div> <!-- end col -->
+    {% endfor %}
+</div>
+<!-- end row -->
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="text-right">
+            <ul class="pagination pagination-rounded justify-content-end">
+                <li class="page-item">
+                    <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="javascript: void(0);">1</a></li>
+                <li class="page-item"><a class="page-link" href="javascript: void(0);">2</a></li>
+                <li class="page-item"><a class="page-link" href="javascript: void(0);">3</a></li>
+                <li class="page-item"><a class="page-link" href="javascript: void(0);">4</a></li>
+                <li class="page-item"><a class="page-link" href="javascript: void(0);">5</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="javascript: void(0);" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block static_js %}
+<!-- Vendor js -->
+<script src="{% static 'backendassets/js/vendor.min.js' %}"></script>
+<!-- App js -->
+<script src="{% static 'backendassets/js/app.min.js' %}"></script>
+{% endblock %}

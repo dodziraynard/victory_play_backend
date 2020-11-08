@@ -1,0 +1,120 @@
+{% extends "dashboard/base_template.html" %}
+{% block title %}Testimonies{% endblock %}
+
+{% load static %}
+{% block static_css %}
+<!-- third party css -->
+<link href="{% static 'backendassets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet"
+    type="text/css" />
+<link href="{% static 'backendassets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css' %}"
+    rel="stylesheet" type="text/css" />
+<link href="{% static 'backendassets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css' %}"
+    rel="stylesheet" type="text/css" />
+<link href="{% static 'backendassets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css' %}" rel="stylesheet"
+    type="text/css" />
+<!-- third party css end -->
+
+<!-- App css -->
+<link href="{% static 'backendassets/css/bootstrap-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-default-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-default-stylesheet" />
+
+<link href="{% static 'backendassets/css/bootstrap-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-dark-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="{% static 'backendassets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Testimonies</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Testimonies</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">New Testimonies</h4>
+                <p class="sub-header font-13">
+                    DataTables has most features enabled by default, so all you need to do to use it with your own
+                    tables is to call the construction
+                    function:
+                    <code>$().DataTable();</code>.
+                </p>
+
+                <table id="basic-datatable" class="table dt-responsive w-100">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        {% for item in testimonies %}
+                        <tr>
+                            <td>
+                                {{item.user.profile.full_name}}
+                            </td>
+                            <td>
+                                {{item.testimony}}
+                            </td>
+                            <td>{{item.date}}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+
+<!-- end row-->
+{% endblock %}
+
+{% block static_js %}
+<!-- Vendor js -->
+<script src="{% static 'backendassets/js/vendor.min.js' %}"></script>
+
+<!-- third party js -->
+<script src="{% static 'backendassets/libs/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/datatables.net-select/js/dataTables.select.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/pdfmake/build/pdfmake.min.js' %}"></script>
+<script src="{% static 'backendassets/libs/pdfmake/build/vfs_fonts.js' %}"></script>
+<!-- third party js ends -->
+
+<!-- Datatables init -->
+<script src="{% static 'backendassets/js/pages/datatables.init.js' %}"></script>
+
+<!-- App js -->
+<script src="{% static 'backendassets/js/app.min.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "dashboard/base_template.html" %}
+{% block title %}SMS{% endblock %}
+
+{% load static %}
+{% block static_css %}
+<!-- App css -->
+<link href="{% static 'backendassets/css/bootstrap-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-default-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-default-stylesheet" />
+
+<link href="{% static 'backendassets/css/bootstrap-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="bs-dark-stylesheet" />
+<link href="{% static 'backendassets/css/app-purple-dark.min.css' %}" rel="stylesheet" type="text/css"
+    id="app-dark-stylesheet" />
+
+<!-- icons -->
+<link href="{% static 'backendassets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<!-- start page title -->
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active">SMS</li>
+                </ol>
+            </div>
+            <h4 class="page-title">SMS</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
+<h1 class="text text-primary">Under construction</h1>
+
+{% endblock %}
+
+{% block static_js %}
+<!-- Vendor js -->
+<script src="{% static 'backendassets/js/vendor.min.js' %}"></script>
+<!-- App js -->
+<script src="{% static 'backendassets/js/app.min.js' %}"></script>
+{% endblock %}
