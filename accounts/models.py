@@ -14,7 +14,7 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=100)
     mobile = models.CharField(max_length=15)
     location = models.CharField(max_length=15, blank=True, null=True)
-    email = models.CharField(max_length=15, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(
         upload_to="uploads/users", default="avatar.png")
     date = models.DateTimeField(default=timezone.now)
@@ -27,7 +27,7 @@ class Profile(models.Model):
         return self.user.username
 
     def get_email(self):
-        return self.user.email
+        return self.email
 
     def get_image_url(self):
         env = "development" if settings.DEBUG else "production"

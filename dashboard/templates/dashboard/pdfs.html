@@ -54,39 +54,21 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">New Pdfs</h4>
-                <p class="sub-header font-13">
-                    DataTables has most features enabled by default, so all you need to do to use it with your own
-                    tables is to call the construction
-                    function:
-                    <code>$().DataTable();</code>.
-                </p>
+                <h4 class="header-title mb-3">All Pdfs</h4>
 
                 <table id="basic-datatable" class="table dt-responsive w-100">
                     <thead>
                         <tr>
-                            <th>Action</th>
                             <th>Pdf</th>
                             <th>Download</th>
                             <th>Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for item in pdfs %}
                         <tr>
-                            <td>
-                                <button onclick="populateEditItemModal(this)" type="button"
-                                    class="btn btn-outline-info btn-rounded waves-effect waves-light"
-                                    data-toggle="modal" data-target="#edit-item-modal">
-                                    <span class="d-none">{{item|jsonify}}</span>
-                                    Edit</button>
-                                <button type="button" onclick="populateDeleteItemModal(this)" data-toggle="modal"
-                                    data-target="#delete-alert-modal"
-                                    class="btn btn-outline-danger btn-rounded waves-effect waves-light">
-                                    <span class="d-none">{{item|jsonify}}</span>
-                                    Delete</button>
-                            </td>
                             <td>
                                 <div class="media">
                                     <img class="d-flex mr-2 rounded-circle" src="{{item.image.url}}"
@@ -101,7 +83,18 @@
                                 <a href="{{item.file.url}}">Download</a>
                             </td>
                             <td>{{item.date}}</td>
-
+                            <td>
+                                <button onclick="populateEditItemModal(this)" type="button"
+                                    class="btn btn-outline-info btn-rounded waves-effect waves-light"
+                                    data-toggle="modal" data-target="#edit-item-modal">
+                                    <span class="d-none">{{item|jsonify}}</span>
+                                    Edit</button>
+                                <button type="button" onclick="populateDeleteItemModal(this)" data-toggle="modal"
+                                    data-target="#delete-alert-modal"
+                                    class="btn btn-outline-danger btn-rounded waves-effect waves-light">
+                                    <span class="d-none">{{item|jsonify}}</span>
+                                    Delete</button>
+                            </td>
                         </tr>
                         {% endfor %}
 

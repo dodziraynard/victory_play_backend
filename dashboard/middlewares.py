@@ -1,4 +1,4 @@
-# from .models import Testimony, PrayerRequest
+from .models import Testimony, PrayerRequest
 from dashboard.models import Config, Notification
 
 
@@ -7,8 +7,10 @@ class CustomMiddleWares(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        # request.testimony_count = Testimony.objects.filter(viewed=False).count()
-        # request.request_count = PrayerRequest.objects.filter(viewed=False).count()
+        request.testimony_count = Testimony.objects.filter(
+            viewed=False).count()
+        request.request_count = PrayerRequest.objects.filter(
+            viewed=False).count()
         # request.message         = request.session.pop("message", "")
         # request.message_type    = request.session.pop("message_type", "")
         request.config = Config.objects.first()

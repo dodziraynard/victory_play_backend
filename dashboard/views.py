@@ -10,8 +10,10 @@ from dashboard.models import (
 )
 from transaction_engine.models import Transaction
 from accounts.models import WelfareContributor, Profile, Leader
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url="accounts:login")
 def index(request):
     template_name = "dashboard/index.html"
     total_welfare_revenue = 0
@@ -35,6 +37,7 @@ def index(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def welfare(request):
     template_name = "dashboard/welfare.html"
     transactions = Transaction.objects.filter(type="welfare").order_by("-id")
@@ -44,6 +47,7 @@ def welfare(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def new_welfare_member(request):
     template_name = "dashboard/welfare.html"
     member_id = request.POST.get("member_id")
@@ -52,6 +56,7 @@ def new_welfare_member(request):
     return redirect("dashboard:welfare")
 
 
+@login_required(login_url="accounts:login")
 def testimonies(request):
     template_name = "dashboard/testimonies.html"
     context = {
@@ -60,6 +65,7 @@ def testimonies(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def prayer_requests(request):
     template_name = "dashboard/prayer_requests.html"
     context = {
@@ -68,6 +74,7 @@ def prayer_requests(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def audios(request):
     template_name = "dashboard/audios.html"
     context = {
@@ -76,12 +83,14 @@ def audios(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def delete_audio(request, pk):
     audio = get_object_or_404(Audio, pk=pk)
     audio.delete()
     return redirect("dashboard:audios")
 
 
+@login_required(login_url="accounts:login")
 def videos(request):
     template_name = "dashboard/videos.html"
     context = {
@@ -90,12 +99,14 @@ def videos(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def delete_video(request, pk):
     video = get_object_or_404(Video, pk=pk)
     video.delete()
     return redirect("dashboard:videos")
 
 
+@login_required(login_url="accounts:login")
 def pdfs(request):
     template_name = "dashboard/pdfs.html"
     context = {
@@ -104,12 +115,14 @@ def pdfs(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def delete_pdf(request, pk):
     pdf = get_object_or_404(Pdf, pk=pk)
     pdf.delete()
     return redirect("dashboard:pdfs")
 
 
+@login_required(login_url="accounts:login")
 def leaders(request):
     template_name = "dashboard/leaders.html"
     context = {
@@ -118,12 +131,14 @@ def leaders(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def delete_leader(request, pk):
     leader = get_object_or_404(Leader, pk=pk)
     leader.delete()
     return redirect("dashboard:leaders")
 
 
+@login_required(login_url="accounts:login")
 def notifications(request):
     template_name = "dashboard/notifications.html"
     notifications = Notification.objects.all().order_by("read", "-id")
@@ -134,6 +149,7 @@ def notifications(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def profiles(request):
     template_name = "dashboard/profiles.html"
     profiles = Profile.objects.all()
@@ -143,6 +159,7 @@ def profiles(request):
     return render(request, template_name, context)
 
 
+@login_required(login_url="accounts:login")
 def sms(request):
     template_name = "dashboard/sms.html"
     context = {

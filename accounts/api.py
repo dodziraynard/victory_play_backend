@@ -6,7 +6,7 @@ from rest_framework.viewsets import ModelViewSet
 from django.db.models import Q
 from datetime import datetime, timedelta
 from accounts.models import Profile, WelfareContributor
-
+from django.contrib.auth import authenticate
 from . serializers import (
     UserSerializer,
     RegisterSerializer,
@@ -33,10 +33,11 @@ class RegisterAPI(generics.GenericAPIView):
 
         user.profile.full_name = full_name
         user.profile.mobile = mobile
+        user.profile.member_id = Profile.objects.count()
         user.profile.save()
 
         return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "profile": ProfileSerializer(user.profile).data,
             "token": AuthToken.objects.create(user)[1]
         })
 
@@ -50,14 +51,16 @@ class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        profile = Profile.objects.get(user=user)
-        return Response({
-            "profile": ProfileSerializer(profile).data,
-            "token": AuthToken.objects.create(user)[1]
-        })
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = authenticate(username=username, password=password)
+        if user and user.is_active:
+            profile = Profile.objects.get(user=user)
+            return Response({
+                "profile": ProfileSerializer(profile).data,
+                "token": AuthToken.objects.create(user)[1]
+            })
+        return Response({"message": "Invalid password or username"}, status=200)
 
 
 # Get User API
@@ -105,29 +108,43 @@ class UserProfileAPI(APIView):
 
     def get(self, request):
         data = self.serializer_class(request.user.profile).data
-        return Response({"profile": [data]})
+        return Response({"profile": data})
 
     def post(self, request, *args, **kwargs):
         full_name = request.POST.get("full_name")
         email = request.POST.get("email")
         mobile = request.POST.get("mobile")
 
+        old_password = request.POST.get("old_password")
+        new_password = request.POST.get("new_password")
+
+        if new_password and old_password:
+            if request.user.check_password(old_password):
+                request.user.set_password(new_password)
+            else:
+                return Response({}, status=403)
+
         # update user's info
         profile = request.user.profile
-        profile.full_name = full_name
-        profile.mobile = mobile
+        if full_name:
+            profile.full_name = full_name
+        if mobile:
+            profile.mobile = mobile
+        if email:
+            profile.email = email
         profile.save()
 
         # Update user's email
         request.user.email = email
         request.user.save()
-
-        data = self.serializer_class(request.user.profile).data
-        return Response({"profile": [data]})
+        print(ProfileSerializer(profile).data)
+        return Response({"profile": ProfileSerializer(profile).data})
 
 
 class WelfareContributorAPI(APIView):
     def get(self, request):
-        arrears = WelfareContributor.objects.get(
-            profile=request.user.profile).arrears
-        return Response({"user": request.user.pk, "arrears": arrears})
+        arrears = WelfareContributor.objects.filter(
+            profile=request.user.profile).first().arrears
+        if arrears:
+            return Response({"user": request.user.pk, "arrears": arrears})
+        return Response({}, status=404)
